@@ -41,7 +41,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="no-print">{{ $keterlambatan->links() }}</div>
+            <div class="no-print">@include('partials.pagination', ['paginator' => $keterlambatan])</div>
         </div>
     </div>
 @endsection

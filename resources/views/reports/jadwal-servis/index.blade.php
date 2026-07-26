@@ -63,7 +63,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="no-print">{{ $jadwalServis->links() }}</div>
+            <div class="no-print">@include('partials.pagination', ['paginator' => $jadwalServis])</div>
         </div>
     </div>
 @endsection

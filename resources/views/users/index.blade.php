@@ -66,7 +66,5 @@
         </div>
     </div>
 
-    <div class="mt-3">
-        {{ $users->links() }}
-    </div>
+    @include('partials.pagination', ['paginator' => $users])
 @endsection

@@ -74,7 +74,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="no-print">{{ $riwayat->links() }}</div>
+            <div class="no-print">@include('partials.pagination', ['paginator' => $riwayat])</div>
         </div>
     </div>
 @endsection

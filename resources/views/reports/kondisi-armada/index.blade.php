@@ -58,7 +58,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <div class="no-print">{{ $kondisiArmadas->links() }}</div>
+            <div class="no-print">@include('partials.pagination', ['paginator' => $kondisiArmadas])</div>
         </div>
     </div>
 @endsection
