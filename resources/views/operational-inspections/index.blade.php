@@ -65,15 +65,15 @@
                 <tbody>
                     @forelse($inspections as $inspection)
                         <tr>
-                            <td>{{ $inspection->inspected_at->format('d/m/Y H:i') }}</td>
+                            <td>{{ optional($inspection->inspected_at)->format('d/m/Y H:i') ?? '-' }}</td>
                             <td>{{ $inspection->type_label }}</td>
                             <td>
-                                <strong>{{ $inspection->vehicle->registration_number }}</strong><br>
-                                <small class="text-muted">{{ $inspection->vehicle->merk }}
-                                    {{ $inspection->vehicle->model }}</small>
+                                <strong>{{ optional($inspection->vehicle)->registration_number ?? '-' }}</strong><br>
+                                <small class="text-muted">{{ optional($inspection->vehicle)->merk }}
+                                    {{ optional($inspection->vehicle)->model }}</small>
                             </td>
-                            <td>{{ $inspection->driver->name }}</td>
-                            <td>{{ number_format($inspection->odometer, 0, ',', '.') }} km</td>
+                            <td>{{ optional($inspection->driver)->name ?? '-' }}</td>
+                            <td>{{ number_format((int) ($inspection->odometer ?? 0), 0, ',', '.') }} km</td>
                             <td>
                                 @php
                                     $badge =

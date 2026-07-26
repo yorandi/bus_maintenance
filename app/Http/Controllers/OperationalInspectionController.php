@@ -85,8 +85,9 @@ class OperationalInspectionController extends Controller
         $inspections = OperationalInspection::with(['vehicle', 'driver'])
             ->when($request->filled('type'), fn ($query) => $query->where('type', $request->type))
             ->when($request->filled('condition_result'), fn ($query) => $query->where('condition_result', $request->condition_result))
-            ->when($this->currentUserIsSopir(), fn ($query) => $query->where('driver_id', Auth::id()))
-            ->latest('inspected_at')
+            ->when($this->currentUserIsSopir(), fn ($query) => $query->where('user_id', Auth::id()))
+            ->orderByDesc('tanggal')
+            ->orderByDesc('jam')
             ->paginate(10)
             ->withQueryString();
 

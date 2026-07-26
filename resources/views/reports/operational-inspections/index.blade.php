@@ -83,12 +83,13 @@
                     <tbody>
                         @forelse($inspections as $inspection)
                             <tr>
-                                <td>{{ $inspection->inspected_at->format('d/m/Y H:i') }}</td>
+                                <td>{{ optional($inspection->inspected_at)->format('d/m/Y H:i') ?? '-' }}</td>
                                 <td>{{ $inspection->type_label }}</td>
-                                <td>{{ $inspection->vehicle->registration_number }} - {{ $inspection->vehicle->merk }}
-                                    {{ $inspection->vehicle->model }}</td>
-                                <td>{{ $inspection->driver->name }}</td>
-                                <td>{{ number_format($inspection->odometer, 0, ',', '.') }} km</td>
+                                <td>{{ optional($inspection->vehicle)->registration_number ?? '-' }} -
+                                    {{ optional($inspection->vehicle)->merk }}
+                                    {{ optional($inspection->vehicle)->model }}</td>
+                                <td>{{ optional($inspection->driver)->name ?? '-' }}</td>
+                                <td>{{ number_format((int) ($inspection->odometer ?? 0), 0, ',', '.') }} km</td>
                                 <td>{{ $inspection->condition_label }}</td>
                                 <td>{{ $inspection->complaint ?: '-' }}</td>
                                 @if (auth()->user()->isAdmin() || auth()->user()->isSopir())
