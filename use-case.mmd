@@ -1,0 +1,50 @@
+graph LR
+    Guest((Guest)) --> Login["Login"]
+    Admin((Admin)) --> Logout["Logout"]
+    Manager((Manager)) --> Logout
+    Mechanic((Mechanic)) --> Logout
+
+    Admin --> Dashboard["View Dashboard"]
+    Manager --> Dashboard
+    Mechanic --> Dashboard
+
+    Admin --> Monitoring["View Monitoring Bus"]
+    Manager --> Monitoring
+    Mechanic --> Monitoring
+
+    Admin --> Fleet["View Daftar Kendaraan"]
+    Manager --> Fleet
+    Mechanic --> Fleet
+    Admin --> ManageFleet["Kelola Kendaraan"]
+    Manager --> ManageFleet
+
+    Admin --> Schedule["View Jadwal Servis"]
+    Manager --> Schedule
+    Mechanic --> Schedule
+    Admin --> ManageSchedule["Kelola Jadwal Servis"]
+    Manager --> ManageSchedule
+
+    Admin --> History["View Riwayat Pemeliharaan"]
+    Manager --> History
+    Mechanic --> History
+    Admin --> ManageHistory["Kelola Riwayat Pemeliharaan"]
+    Manager --> ManageHistory
+
+    Admin --> Reports["View Reports"]
+    Manager --> Reports
+    Mechanic --> Reports
+
+    Reports --> DataArmada["Laporan Data Armada"]
+    Reports --> ServiceSchedule["Laporan Jadwal Servis"]
+    Reports --> MaintenanceHistory["Laporan Riwayat Pemeliharaan"]
+    Reports --> LateService["Laporan Keterlambatan Servis"]
+    Reports --> VehicleCondition["Laporan Kondisi Armada"]
+
+    DataArmada --> Export["Ekspor PDF/Excel"]
+    ServiceSchedule --> Export
+    MaintenanceHistory --> Export
+    LateService --> Export
+    VehicleCondition --> Export
+
+    classDef actor fill:#f2f6ff,stroke:#3a8dff,stroke-width:2px;
+    class Guest,Admin,Manager,Mechanic actor;

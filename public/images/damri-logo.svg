@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="48" viewBox="0 0 200 48" role="img" aria-label="DAMRI logo">
+  <defs>
+    <linearGradient id="a" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#004085"/>
+      <stop offset="100%" stop-color="#0062cc"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="48" rx="8" fill="none"/>
+  <path d="M12 6 0 24l12 18h22l22-18-22-18H12Z" fill="#ffd700"/>
+  <path d="M46 6 34 24l12 18h22l22-18-22-18H46Z" fill="#0033a0"/>
+  <g transform="translate(90 10)">
+    <text x="0" y="24" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#0033a0">DAMRI</text>
+  </g>
+</svg>
