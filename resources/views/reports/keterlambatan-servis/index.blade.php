@@ -33,9 +33,9 @@
                         <tr>
                             <td><strong>{{ $item->armada->kode_armada }}</strong></td>
                             <td>{{ $item->armada->nomor_polisi }}</td>
-                            <td>{{ $item->jadwal_servis_berikutnya->format('d/m/Y') }}</td>
+                            <td>{{ optional($item->jadwal_servis_berikutnya)->format('d/m/Y') ?? '-' }}</td>
                             <td>{{ now()->format('d/m/Y') }}</td>
-                            <td><span class="badge bg-danger">{{ $item->keterlambatan_hari }} hari</span></td>
+                            <td><span class="badge bg-danger">{{ $item->keterlambatan_hari ?? 0 }} hari</span></td>
                             <td>@include('reports.partials.badges', ['value' => $item->armada->status_armada])</td>
                         </tr>
                     @endforeach

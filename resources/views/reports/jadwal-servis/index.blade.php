@@ -56,8 +56,8 @@
                         <tr>
                             <td><strong>{{ $jadwal->armada->kode_armada }}</strong></td>
                             <td>{{ $jadwal->armada->nomor_polisi }}</td>
-                            <td>{{ $jadwal->tanggal_servis_terakhir?->format('d/m/Y') ?? '-' }}</td>
-                            <td>{{ $jadwal->jadwal_servis_berikutnya->format('d/m/Y') }}</td>
+                            <td>{{ optional($jadwal->tanggal_servis_terakhir)->format('d/m/Y') ?? '-' }}</td>
+                            <td>{{ optional($jadwal->jadwal_servis_berikutnya)->format('d/m/Y') ?? '-' }}</td>
                             <td>@include('reports.partials.badges', ['value' => $jadwal->status_servis])</td>
                         </tr>
                     @endforeach

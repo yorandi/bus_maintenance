@@ -118,9 +118,9 @@ class ReportArmadaController extends Controller
         return $pdf->download('laporan-riwayat-pemeliharaan-' . now()->format('Ymd') . '.pdf');
     }
 
-    public function keterlambatanServis()
+    public function keterlambatanServis(Request $request)
     {
-        $keterlambatan = $this->keterlambatanQuery()->paginate(10);
+        $keterlambatan = $this->keterlambatanQuery()->paginate(10)->appends($request->query());
 
         return view('reports.keterlambatan-servis.index', compact('keterlambatan'));
     }
