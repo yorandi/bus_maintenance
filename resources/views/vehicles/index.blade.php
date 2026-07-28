@@ -88,8 +88,10 @@
                                             <span class="badge bg-success">Baik</span>
                                         @elseif($vehicle->status == 'maintenance')
                                             <span class="badge bg-warning text-dark">Servis</span>
-                                        @else
+                                        @elseif($vehicle->status == 'damaged')
                                             <span class="badge bg-danger">Rusak</span>
+                                        @else
+                                            <span class="badge bg-secondary">Tidak Beroperasi</span>
                                         @endif
                                     </td>
                                     <td>

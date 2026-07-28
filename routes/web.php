@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/monitoring', [MonitoringController::class, 'index'])->name('monitoring.index');
 
     // ========== OPERATIONAL INSPECTIONS (AT/3 & AT/4) ==========
+    Route::get('/at3/create', [OperationalInspectionController::class, 'createAt3'])->name('at3.create');
+    Route::get('/at4/create', [OperationalInspectionController::class, 'createAt4'])->name('at4.create');
+
     Route::prefix('inspections')->name('inspections.')->group(function () {
         Route::get('/', [OperationalInspectionController::class, 'index'])->name('index');
         Route::get('at3/create', [OperationalInspectionController::class, 'createAt3'])->name('at3.create');

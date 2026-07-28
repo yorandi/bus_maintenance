@@ -15,6 +15,7 @@
         ['Total Armada', $stats['total_armada'], 'primary', 'fa-bus'],
         ['Armada Aktif', $stats['armada_aktif'], 'success', 'fa-check-circle'],
         ['Armada Servis', $stats['armada_servis'], 'warning', 'fa-tools'],
+        ['Armada Rusak', $stats['armada_rusak'], 'dark', 'fa-wrench'],
         ['Tidak Beroperasi', $stats['armada_tidak_beroperasi'], 'danger', 'fa-ban'],
         ['Total Pemeliharaan', $stats['total_pemeliharaan'], 'info', 'fa-history'],
         ['Servis Bulan Ini', $stats['servis_bulan_ini'], 'secondary', 'fa-calendar-check'],

@@ -83,7 +83,7 @@ class OperationalInspectionController extends Controller
     public function index(Request $request)
     {
         $inspections = OperationalInspection::with(['vehicle', 'driver'])
-            ->when($request->filled('type'), fn ($query) => $query->where('type', $request->type))
+            ->when($request->filled('type'), fn ($query) => $query->where('jenis', $request->type === 'at4' ? 'AT4' : 'AT3'))
             ->when($request->filled('condition_result'), fn ($query) => $query->where('condition_result', $request->condition_result))
             ->when($this->currentUserIsSopir(), fn ($query) => $query->where('user_id', Auth::id()))
             ->orderByDesc('tanggal')
@@ -118,6 +118,7 @@ class OperationalInspectionController extends Controller
     {
         $this->authorizeDriverAccess($inspection);
 
+        $inspection->loadMissing(['vehicle', 'driver']);
         $vehicles = Vehicle::orderBy('registration_number')->get();
         $items = $inspection->type === OperationalInspection::TYPE_AT3 ? self::AT3_ITEMS : self::AT4_ITEMS;
         $title = $inspection->type === OperationalInspection::TYPE_AT3 ? 'Edit AT/3 Digital' : 'Edit AT/4 Digital';
@@ -152,13 +153,15 @@ class OperationalInspectionController extends Controller
 
         $inspection->update([
             'vehicle_id' => $validated['vehicle_id'],
+            'driver_id' => Auth::id(),
             'odometer' => $validated['odometer'],
             'checklist' => $validated['checklist'],
             'complaint' => $validated['complaint'] ?? null,
             'condition_result' => $condition,
+            'inspected_at' => now(),
         ]);
 
-        Vehicle::find($validated['vehicle_id'])->update([
+        $inspection->vehicle?->update([
             'status' => match ($condition) {
                 'tidak_layak' => 'damaged',
                 'perlu_perbaikan' => 'maintenance',
@@ -175,15 +178,14 @@ class OperationalInspectionController extends Controller
     {
         $this->authorizeDriverAccess($inspection);
 
-        $inspection->load(['histories.editedBy', 'vehicle', 'driver']);
-        $inspection->load(['vehicle', 'driver']);
+        $inspection->loadMissing(['vehicle', 'driver']);
 
         return view('operational-inspections.show', compact('inspection'));
     }
 
     private function create(string $type)
     {
-        if (! $this->currentUserIsSopir()) {
+        if (! Auth::check()) {
             abort(403);
         }
 
@@ -191,7 +193,7 @@ class OperationalInspectionController extends Controller
         $items = $type === OperationalInspection::TYPE_AT3 ? self::AT3_ITEMS : self::AT4_ITEMS;
         $title = $type === OperationalInspection::TYPE_AT3 ? 'AT/3 Digital - Sebelum Operasional' : 'AT/4 Digital - Setelah Operasional';
 
-        return view('operational-inspections.form', compact('vehicles', 'items', 'type', 'title'));
+        return view('operational-inspections.form', compact('vehicles', 'items', 'type', 'title'))->with('inspection', null);
     }
 
     private function store(Request $request, string $type)

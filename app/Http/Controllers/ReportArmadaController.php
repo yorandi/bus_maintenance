@@ -24,12 +24,7 @@ class ReportArmadaController extends Controller
 
     public function armada(Request $request)
     {
-        $summary = [
-            'total' => Armada::count(),
-            'aktif' => Armada::byStatus('aktif')->count(),
-            'servis' => Armada::byStatus('servis')->count(),
-            'tidak_beroperasi' => Armada::byStatus('tidak_beroperasi')->count(),
-        ];
+        $summary = Armada::statusSummary();
 
         $armadas = $this->armadaQuery($request)->paginate(10)->withQueryString();
 
@@ -49,12 +44,7 @@ class ReportArmadaController extends Controller
         $pdf = Pdf::loadView('reports.pdf.armada', [
             'title' => 'Laporan Data Armada',
             'armadas' => $this->armadaQuery($request)->get(),
-            'summary' => [
-                'total' => Armada::count(),
-                'aktif' => Armada::byStatus('aktif')->count(),
-                'servis' => Armada::byStatus('servis')->count(),
-                'tidak_beroperasi' => Armada::byStatus('tidak_beroperasi')->count(),
-            ],
+            'summary' => Armada::statusSummary(),
         ])->setPaper('a4', 'landscape');
 
         return $pdf->download('laporan-data-armada-' . now()->format('Ymd') . '.pdf');
@@ -170,15 +160,18 @@ class ReportArmadaController extends Controller
 
     public static function dashboardStats(): array
     {
+        $armadaStats = Armada::statusSummary();
+
         return [
-            'total_armada' => Armada::count(),
-            'armada_aktif' => Armada::byStatus('aktif')->count(),
-            'armada_servis' => Armada::byStatus('servis')->count(),
-            'armada_tidak_beroperasi' => Armada::byStatus('tidak_beroperasi')->count(),
+            'total_armada' => $armadaStats['total'],
+            'armada_aktif' => $armadaStats['aktif'],
+            'armada_servis' => $armadaStats['servis'],
+            'armada_rusak' => $armadaStats['rusak'],
+            'armada_tidak_beroperasi' => $armadaStats['tidak_beroperasi'],
             'total_pemeliharaan' => Pemeliharaan::count(),
             'servis_bulan_ini' => Pemeliharaan::whereMonth('maintenance_date', now()->month)->whereYear('maintenance_date', now()->year)->count(),
             'kendaraan_terlambat_servis' => JadwalServis::whereDate('scheduled_date', '<', now())->count(),
-            'kendaraan_rusak' => KondisiArmada::where('status', 'Ditolak')->count(),
+            'kendaraan_rusak' => $armadaStats['rusak'],
         ];
     }
 

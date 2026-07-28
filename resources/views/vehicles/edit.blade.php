@@ -112,6 +112,9 @@
                                 </option>
                                 <option value="damaged"
                                     {{ old('status', $vehicle->status) == 'damaged' ? 'selected' : '' }}>Rusak</option>
+                                <option value="inactive"
+                                    {{ old('status', $vehicle->status) == 'inactive' ? 'selected' : '' }}>Tidak Beroperasi
+                                </option>
                             </select>
                             @error('status')
                                 <div class="invalid-feedback">{{ $message }}</div>

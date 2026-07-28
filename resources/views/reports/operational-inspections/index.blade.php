@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', $title ?? 'Laporan AT/3 & AT/4')
+@section('title', $title ?? 'Laporan')
 
 @section('content')
     <div class="row mb-4">
         <div class="col-md-12">
-            <h2><i class="fas fa-file-alt"></i> {{ $title ?? 'Laporan AT/3 & AT/4' }}</h2>
+            <h2><i class="fas fa-file-alt"></i> {{ $title ?? 'Laporan ?>' }}</h2>
             <p class="text-muted">Lihat dan ekspor hasil pemeriksaan operasional sopir.</p>
         </div>
     </div>

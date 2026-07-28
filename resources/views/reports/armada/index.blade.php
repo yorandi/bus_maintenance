@@ -16,8 +16,8 @@
     </div>
 
     <div class="row">
-        @foreach ([['Total Armada', $summary['total'], 'primary'], ['Armada Aktif', $summary['aktif'], 'success'], ['Armada Servis', $summary['servis'], 'warning'], ['Tidak Beroperasi', $summary['tidak_beroperasi'], 'danger']] as $item)
-            <div class="col-md-3 mb-3">
+        @foreach ([['Total Armada', $summary['total'], 'primary'], ['Armada Aktif', $summary['aktif'], 'success'], ['Armada Servis', $summary['servis'], 'warning'], ['Armada Rusak', $summary['rusak'], 'danger'], ['Tidak Beroperasi', $summary['tidak_beroperasi'], 'secondary']] as $item)
+            <div class="col-lg col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="text-muted">{{ $item[0] }}</div>
@@ -40,7 +40,7 @@
                     <label class="form-label">Status Armada</label>
                     <select name="status" class="form-select">
                         <option value="">Semua Status</option>
-                        @foreach (['aktif' => 'Aktif', 'servis' => 'Servis', 'tidak_beroperasi' => 'Tidak Beroperasi'] as $value => $label)
+                        @foreach (['aktif' => 'Aktif', 'servis' => 'Servis', 'rusak' => 'Rusak', 'tidak_beroperasi' => 'Tidak Beroperasi'] as $value => $label)
                             <option value="{{ $value }}" @selected(request('status') === $value)>{{ $label }}</option>
                         @endforeach
                     </select>

@@ -34,7 +34,7 @@ class MaintenanceScheduleController extends Controller
             'vehicle_id' => 'required|exists:armadas,id',
             'service_type' => 'required|string|max:100',
             'scheduled_date' => 'required|date|after_or_equal:today',
-            'description' => 'nullable|string',
+            'keterangan' => 'nullable|string',
             'assigned_mechanic' => 'nullable|string|max:255',
         ]);
 
@@ -50,7 +50,7 @@ class MaintenanceScheduleController extends Controller
             'service_type' => $validated['service_type'],
             'scheduled_date' => $validated['scheduled_date'],
             'tanggal_servis' => $validated['scheduled_date'],
-            'description' => $validated['description'] ?? null,
+            'keterangan' => $validated['keterangan'] ?? null,
             'assigned_mechanic' => $validated['assigned_mechanic'] ?? null,
             'status' => 'pending',
             'prioritas' => 'Sedang',
@@ -90,8 +90,9 @@ class MaintenanceScheduleController extends Controller
             'vehicle_id' => 'required|exists:armadas,id',
             'service_type' => 'required|string|max:100',
             'scheduled_date' => 'required|date',
-            'description' => 'nullable|string',
+            'keterangan' => 'nullable|string',
             'assigned_mechanic' => 'nullable|string|max:255',
+            'status' => 'required|in:pending,in_progress,completed,cancelled'
         ]);
 
         $jenisServis = JenisServis::query()->firstOrCreate(
@@ -106,9 +107,9 @@ class MaintenanceScheduleController extends Controller
             'service_type' => $validated['service_type'],
             'scheduled_date' => $validated['scheduled_date'],
             'tanggal_servis' => $validated['scheduled_date'],
-            'description' => $validated['description'] ?? null,
+            'keterangan' => $validated['keterangan'] ?? null,
             'assigned_mechanic' => $validated['assigned_mechanic'] ?? null,
-            'status' => 'pending',
+            'status' =>$validated['status'],
             'prioritas' => $schedule->prioritas ?? 'Sedang',
         ]);
 

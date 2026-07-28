@@ -45,6 +45,20 @@ class OperationalInspection extends Model
             $inspection->jam = $inspection->jam ?? now()->format('H:i:s');
             $inspection->status = $inspection->status ?? json_encode($inspection->checklist ?? [], JSON_UNESCAPED_UNICODE);
         });
+
+        static::saving(function (self $inspection): void {
+            $vehicleId = $inspection->getAttribute('vehicle_id') ?? $inspection->getAttribute('armada_id');
+            if ($vehicleId !== null && ! Vehicle::query()->whereKey($vehicleId)->exists()) {
+                $inspection->attributes['vehicle_id'] = null;
+                $inspection->attributes['armada_id'] = null;
+            }
+
+            $driverId = $inspection->getAttribute('driver_id') ?? $inspection->getAttribute('user_id');
+            if ($driverId !== null && ! User::query()->whereKey($driverId)->exists()) {
+                $inspection->attributes['driver_id'] = null;
+                $inspection->attributes['user_id'] = null;
+            }
+        });
     }
 
     public function vehicle(): BelongsTo
@@ -81,7 +95,8 @@ class OperationalInspection extends Model
 
     public function getTypeAttribute(): string
     {
-        $jenis = strtoupper($this->attributes['jenis'] ?? 'AT3');
+        $rawType = $this->attributes['type'] ?? $this->attributes['jenis'] ?? 'AT3';
+        $jenis = strtoupper((string) $rawType);
 
         return $jenis === 'AT4' ? self::TYPE_AT4 : self::TYPE_AT3;
     }

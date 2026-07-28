@@ -12,28 +12,34 @@
 
 <!-- Statistics Cards -->
 <div class="row">
-    <div class="col-md-3 mb-4">
+    <div class="col-lg col-md-4 mb-4">
         <div class="stat-card">
             <div class="stat-number">{{ $vehicleStats['total'] }}</div>
-            <div class="stat-label">Total Kendaraan</div>
+            <div class="stat-label">Total Armada</div>
         </div>
     </div>
-    <div class="col-md-3 mb-4">
+    <div class="col-lg col-md-4 mb-4">
         <div class="stat-card good">
-            <div class="stat-number">{{ $vehicleStats['good'] }}</div>
-            <div class="stat-label">Kendaraan Baik</div>
+            <div class="stat-number">{{ $vehicleStats['aktif'] }}</div>
+            <div class="stat-label">Beroperasi</div>
         </div>
     </div>
-    <div class="col-md-3 mb-4">
+    <div class="col-lg col-md-4 mb-4">
         <div class="stat-card maintenance">
-            <div class="stat-number">{{ $vehicleStats['maintenance'] }}</div>
+            <div class="stat-number">{{ $vehicleStats['servis'] }}</div>
             <div class="stat-label">Dalam Servis</div>
         </div>
     </div>
-    <div class="col-md-3 mb-4">
+    <div class="col-lg col-md-4 mb-4">
         <div class="stat-card damaged">
-            <div class="stat-number">{{ $vehicleStats['damaged'] }}</div>
+            <div class="stat-number">{{ $vehicleStats['rusak'] }}</div>
             <div class="stat-label">Rusak</div>
+        </div>
+    </div>
+    <div class="col-lg col-md-4 mb-4">
+        <div class="stat-card damaged">
+            <div class="stat-number">{{ $vehicleStats['tidak_beroperasi'] }}</div>
+            <div class="stat-label">Tidak Beroperasi</div>
         </div>
     </div>
 </div>
@@ -44,13 +50,14 @@
         ['Total Armada', $vehicleStats['total'], 'primary', 'fa-bus'],
         ['Armada Aktif', $reportStats['aktif'], 'success', 'fa-check-circle'],
         ['Armada Servis', $reportStats['servis'], 'warning', 'fa-tools'],
+        ['Armada Rusak', $reportStats['rusak'], 'dark', 'fa-wrench'],
         ['Tidak Beroperasi', $reportStats['tidak_beroperasi'], 'danger', 'fa-ban'],
         // ['Total Pemeliharaan', $reportStats['total_pemeliharaan'], 'info', 'fa-history'],
         // ['Servis Bulan Ini', $reportStats['servis_bulan_ini'], 'secondary', 'fa-calendar-check'],
         // ['Terlambat Servis', $reportStats['kendaraan_terlambat_servis'], 'danger', 'fa-exclamation-triangle'],
         // ['Kendaraan Rusak', $reportStats['kendaraan_rusak'], 'dark', 'fa-wrench'],
     ] as $item)
-        <div class="col-md-3 mb-3">
+        <div class="col-lg col-md-4 mb-3">
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body d-flex align-items-center gap-3">
                     <div class="bg-{{ $item[2] }} text-white rounded p-3">

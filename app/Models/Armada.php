@@ -13,6 +13,11 @@ class Armada extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public const STATUS_AKTIF = 'aktif';
+    public const STATUS_SERVIS = 'servis';
+    public const STATUS_RUSAK = 'rusak';
+    public const STATUS_TIDAK_BEROPERASI = 'tidak_beroperasi';
+
     protected $fillable = [
         "status_armada_id",
         "kode_armada",
@@ -209,5 +214,27 @@ class Armada extends Model
         }
 
         return $this->scopeByStatus($query, $status);
+    }
+
+    public static function statusSummary(): array
+    {
+        $total = self::query()->count();
+        $aktif = self::byStatus(self::STATUS_AKTIF)->count();
+        $servis = self::byStatus(self::STATUS_SERVIS)->count();
+        $rusak = self::byStatus(self::STATUS_RUSAK)->count();
+
+        $tidakBeroperasi = max(0, $total - $aktif - $servis - $rusak);
+
+        return [
+            'total' => $total,
+            'aktif' => $aktif,
+            'servis' => $servis,
+            'rusak' => $rusak,
+            'tidak_beroperasi' => $tidakBeroperasi,
+            'good' => $aktif,
+            'maintenance' => $servis,
+            'damaged' => $rusak,
+            'inactive' => $tidakBeroperasi,
+        ];
     }
 }

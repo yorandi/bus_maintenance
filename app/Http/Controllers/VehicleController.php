@@ -85,7 +85,7 @@ class VehicleController extends Controller
             'tahun_pembuatan' => 'required|integer|min:1900|max:' . now()->year,
             'kapasitas_penumpang' => 'required|integer|min:1',
             'date_operation_started' => 'required|date',
-            'status' => 'required|in:good,maintenance,damaged',
+            'status' => 'required|in:good,maintenance,damaged,inactive',
             'notes' => 'nullable|string',
         ]);
 
@@ -113,11 +113,6 @@ class VehicleController extends Controller
      */
     public static function getStatusSummary()
     {
-        return [
-            'total' => Vehicle::count(),
-            'good' => Vehicle::byStatus('good')->count(),
-            'maintenance' => Vehicle::byStatus('maintenance')->count(),
-            'damaged' => Vehicle::byStatus('damaged')->count(),
-        ];
+        return Vehicle::statusSummary();
     }
 }

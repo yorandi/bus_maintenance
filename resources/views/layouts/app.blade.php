@@ -286,7 +286,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link {{ request()->routeIs('inspections.*') ? 'active' : '' }}"
                                         href="{{ route('inspections.index') }}">
-                                        <i class="fas fa-clipboard-list"></i> Laporan AT/3
+                                        <i class="fas fa-clipboard-list"></i> Laporan
                                     </a>
                                 </li>
                             @endif

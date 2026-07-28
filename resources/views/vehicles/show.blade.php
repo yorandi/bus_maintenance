@@ -76,8 +76,10 @@
                                 <span class="badge bg-success" style="font-size: 0.95rem;">Baik</span>
                             @elseif($vehicle->status == 'maintenance')
                                 <span class="badge bg-warning text-dark" style="font-size: 0.95rem;">Dalam Servis</span>
-                            @else
+                            @elseif($vehicle->status == 'damaged')
                                 <span class="badge bg-danger" style="font-size: 0.95rem;">Rusak</span>
+                            @else
+                                <span class="badge bg-secondary" style="font-size: 0.95rem;">Tidak Beroperasi</span>
                             @endif
                         </p>
                     </div>
